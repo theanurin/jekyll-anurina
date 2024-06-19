@@ -1,0 +1,7 @@
+{%- assign lang = include.lang -%}
+{%- assign page_url = include.page_url -%}
+<li>
+    <a lang="{{ lang }}" href="{{ page_url | relative_url }}">
+         <img src="{{ '/assets/language-icons/' | append: lang | append: '.svg' | relative_url }}" alt="{{ lang }} language icon" style="width:36px;">
+    </a>
+</li>

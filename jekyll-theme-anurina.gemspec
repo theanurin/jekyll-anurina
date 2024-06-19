@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-theme-anurina"
-  spec.version       = "0.1.0"
-  spec.authors       = [""]
+  spec.version       = "0.0.0"
+  spec.authors       = ["Max Anurin"]
   spec.email         = ["jekyll-theme@anurin.name"]
 
-  spec.summary       = "Write a short summary, because Rubygems requires one."
+  spec.summary       = "TBD"
   spec.homepage      = "https://github.com/theanurin/jekyll-theme-anurina"
   spec.license       = "MIT"
 
