@@ -1,0 +1,23 @@
+---
+---
+{%- assign page_language = page.collection | default: site.language_default -%}
+{%- assign redirect_url = site[page_language] | where_exp: "item", "item.layout == 'home'" | map: "url" | first -%}
+<!DOCTYPE html>
+<html lang="{{ page_language }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="0; url={{ redirect_url | relative_url }}">
+        <script type="text/javascript">
+            window.location.href = "{{ redirect_url | relative_url }}"
+        </script>
+        <title>Index Page Redirection</title>
+    </head>
+    <body>
+        {%- if content != '' -%}
+            {{ content }}
+        {%- else -%}
+            {%- comment -%}Note: don't tell people to `click` the link, just tell them that it is a link.{%- endcomment -%}
+            If you are not redirected automatically, follow this <a href='{{ redirect_url | relative_url }}'>link</a> to see index page.
+        {%- endif -%}
+    </body>
+</html>
