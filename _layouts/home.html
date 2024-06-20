@@ -18,15 +18,15 @@ layout: base
       {%- if post -%}
         {%- assign posts = posts | push: post -%}
       {%- else -%}
-        {%- assign lang_posts = "" | split: ',' -%}
+        {%- assign translated_post_documents = "" | split: ',' -%}
         {%- for language in languages -%}
-          {%- assign translated_page = site.documents | where_exp: "item", "item.layout == 'post' and item.name == unique_post_name" | where: "collection", language.label | first -%}
-          {%- if translated_page %}
-            {% assign lang_posts = lang_posts | push: translated_page %}
+          {%- assign translated_post_document = site.documents | where_exp: "item", "item.layout == 'post' and item.name == unique_post_name" | where: "collection", language.label | first -%}
+          {%- if translated_post_document %}
+            {% assign translated_post_documents = translated_post_documents | push: translated_post_document %}
           {%- endif -%}
         {%- endfor -%}
-        {%- assign post = lang_posts | first -%}
-        {%- assign posts = posts | push: post -%}
+        {%- assign first_translated_post_document = translated_post_documents | first -%}
+        {%- assign posts = posts | push: first_translated_post_document -%}
       {%- endif -%}
     {%- endfor -%}
     {% assign posts = posts | sort: "date" | reverse %}
