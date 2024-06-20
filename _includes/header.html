@@ -21,7 +21,7 @@
 {%- assign menu_content_pages_size = menu_content_pages | size -%}
 <header class="site-header">
   <div class="wrapper">
-    <a class="site-title" rel="author" href="{{ "/" | append: page_language | append: '/' | relative_url }}">{{ site.title | escape }}</a>
+    <a class="site-title" rel="author" href="{{ site[page_language] | where_exp: "item", "item.layout == 'home'" | map: "url" | first  | relative_url }}">{{ site.title | escape }}</a>
     <nav class="site-nav">
       {%- if menu_content_pages_size > 0 -%}
       <input type="checkbox" id="nav-trigger" class="nav-trigger" />
@@ -35,7 +35,7 @@
       <div class="trigger">
         {%- for menu_content_page in menu_content_pages -%}
           {%- assign menu_content_page_title = menu_content_page.menu_title | default: menu_content_page.title -%}
-        <a class="page-link" href="{{ menu_content_page.url | replace: '/index', '/' | relative_url }}">{{ menu_content_page_title | escape }}</a>
+        <a class="page-link" href="{{ menu_content_page.url | relative_url }}">{{ menu_content_page_title | escape }}</a>
         {%- endfor -%}
       </div>
       {%- endif -%}

@@ -24,12 +24,7 @@
 {%- capture language_selector_items -%}
 {%- for flag_page in flag_pages -%}
 {%- assign flag_page_language = flag_page.collection -%}
-{%- if translated_page.name == 'index.pug' or translated_page.name == 'index.markdown' or translated_page.name == 'index.md' -%}
-    {%- assign flag_page_url = flag_page.url | replace: '/index', '/' -%}
-{%- else -%}
-    {%- assign flag_page_url = flag_page.url -%}
-{%- endif -%}
-{%- include language_selector_item.html lang=flag_page_language page_url=flag_page_url -%}
+{%- include language_selector_item.html lang=flag_page_language page_url=flag_page.url -%}
 {%- endfor -%}
 {%- endcapture -%}
 {%- include language_selector_container.html language_selector_items=language_selector_items -%}
