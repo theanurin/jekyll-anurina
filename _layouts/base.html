@@ -1,7 +1,7 @@
 ---
 ---
 {%- assign page_language = page.collection | default: site.language_default | default: 'uk-UA' -%}
-<!DOCTYPE html>
+{%- raw %}{% endraw %}<!DOCTYPE html>
 <html lang="{{ page_language }}">
   {%- include head.html -%}
   <body>
@@ -21,6 +21,6 @@
     </div>
     <div class="background-footer"></div>
 {% include bootstrap-script.html -%}
-{{- none }}    <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
+{%- raw %}{% endraw %}    <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
   </body>
 </html>
