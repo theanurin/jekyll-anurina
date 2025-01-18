@@ -1,12 +1,12 @@
 ---
 layout: base
 ---
-{%- assign page_language = page.collection | default: site.language_default -%}
-{%- assign languages = site.collections | where_exp: "item", "item.label != 'posts' and item.label != 'drafts'" | sort: "lang_sort_order" | reverse -%}
+{%- assign page_language = page.collection | default: site.anurina.locale.default | default: 'en-US' -%}
+{%- assign locales = site.anurina.locale.sequence -%}
 {%- assign unique_post_names = site.documents | where_exp: "item", "item.layout == 'post'" | map: "name" | uniq -%}
 {%- if jekyll.environment != 'production' -%}
 <!-- (layout: home) page_language: {{ page_language }} -->
-<!-- (layout: home) languages: {{ languages | join: ", " }} -->
+<!-- (layout: home) locales: {{ locales | join: ", " }} -->
 <!-- (layout: home) unique_post_names: {{ unique_post_names | join: ", " }} -->
 {% raw %}{% endraw -%}{%- endif -%}
 <div class="home">
@@ -24,14 +24,18 @@ layout: base
         {%- assign posts = posts | push: post -%}
       {%- else -%}
         {%- assign translated_post_documents = "" | split: ',' -%}
-        {%- for language in languages -%}
-          {%- assign translated_post_document = site.documents | where_exp: "item", "item.layout == 'post' and item.name == unique_post_name" | where: "collection", language.label | first -%}
+        {%- for locale in locales -%}
+          {%- assign translated_post_document = site.documents | where_exp: "item", "item.layout == 'post' and item.name == unique_post_name" | where: "collection", locale | first -%}
           {%- if translated_post_document %}
             {% assign translated_post_documents = translated_post_documents | push: translated_post_document %}
           {%- endif -%}
         {%- endfor -%}
         {%- assign first_translated_post_document = translated_post_documents | first -%}
-        {%- assign posts = posts | push: first_translated_post_document -%}
+        {%- if first_translated_post_document -%}
+          {%- assign posts = posts | push: first_translated_post_document -%}
+        {%- else -%}
+          {%- include unresolved-translation-document.html document_name=unique_post_name -%}
+        {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
     {% assign posts = posts | sort: "date" | reverse %}

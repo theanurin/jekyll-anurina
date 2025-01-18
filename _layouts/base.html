@@ -1,8 +1,12 @@
 ---
 ---
-{%- assign page_language = page.collection | default: site.language_default | default: 'uk-UA' -%}
+{%- assign page_language = page.collection | default: site.anurina.locale.default | default: 'en-US' -%}
 {%- raw %}{% endraw %}<!DOCTYPE html>
 {%- if jekyll.environment != 'production' -%}
+<!-- (layout: base) site.anurina.locale.default: {{ site.anurina.locale.default }} -->
+<!-- (layout: base) site.anurina.locale.sequence: {{  site.anurina.locale.sequence | join: ", " }} -->
+<!-- (layout: base) site.permalink: {{ site.permalink }} -->
+<!-- (layout: base) site.collections_dir: {{ site.collections_dir }} -->
 <!-- (layout: base) page_language: {{ page_language }} -->
 {% raw %}{% endraw -%}{%- endif -%}
 <html lang="{{ page_language }}">

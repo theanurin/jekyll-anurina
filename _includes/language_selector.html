@@ -1,5 +1,5 @@
-{%- assign page_language = page.collection | default: site.language_default -%}
-{%- assign languages = site.collections | where_exp: "item", "item.label != 'posts' and item.label != 'drafts'" | sort: "lang_sort_order" -%}
+{%- assign page_language = page.collection | default: site.anurina.locale.default | default: 'en-US' -%}
+{%- assign locales = site.anurina.locale.sequence -%}
 {%- assign page_id = page.id | replace: page_language, "" -%}
 {%- assign translated_pages = site.documents | where: "id", page.id -%}
 {%- for document in site.documents -%}
@@ -13,8 +13,8 @@
 {%- endfor -%}
 {%- assign translated_pages = translated_pages | sort: "collection" -%}
 {%- assign flag_pages = "" | split: ',' -%}
-{%- for language in languages -%}
-  {%- assign translated_page = translated_pages | where: "collection", language.label | first -%}
+{%- for locale in locales -%}
+  {%- assign translated_page = translated_pages | where: "collection", locale | first -%}
   {%- if translated_page %}
     {% assign flag_pages = flag_pages | push: translated_page %}
   {%- endif -%}

@@ -1,15 +1,15 @@
-{%- assign page_language = page.collection | default: site.language_default -%}
-{%- assign languages = site.collections | where_exp: "item", "item.label != 'posts' and item.label != 'drafts'" | sort: "lang_sort_order" | reverse -%}
+{%- assign page_language = page.collection | default: site.anurina.locale.default | default: 'en-US' -%}
+{%- assign locales = site.anurina.locale.sequence -%}
 {%- assign unique_page_names = site.documents | where_exp: "item", "item.layout == 'page' or item.layout == 'home'" | map: "name" | uniq -%}
 {%- assign menu_content_pages = "" | split: ',' -%}
-{%- for menu_page_name in site.anurina.menu_pages -%}
+{%- for menu_page_name in site.anurina.menuable -%}
   {%- assign menu_page = site[page_language] | where_exp: "item", "item.name == menu_page_name" | first -%}
   {%- if menu_page -%}
     {% assign menu_content_pages = menu_content_pages | push: menu_page %}
   {%- else -%}
     {%- assign menu_page_lang_variants = "" | split: ',' -%}
-    {%- for language in languages -%}
-      {%- assign localized_menu_page = site[language.label] | where_exp: "item", "item.name == menu_page_name" | first -%}
+    {%- for locale in locales -%}
+      {%- assign localized_menu_page = site[locale] | where_exp: "item", "item.name == menu_page_name" | first -%}
       {%- if localized_menu_page %}
         {% assign menu_page_lang_variants = menu_page_lang_variants | push: localized_menu_page %}
       {%- endif -%}
