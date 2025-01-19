@@ -29,8 +29,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 3.0.0'
 
-  # spec.add_runtime_dependency "base64", "~> 0.2.0"
-  # spec.add_runtime_dependency "csv", "~> 3.3.2"
+  spec.add_runtime_dependency "base64", "~> 0.2.0"
+  spec.add_runtime_dependency "csv", "~> 3.3.2"
   spec.add_runtime_dependency "jekyll", "~> 4.3.3", "< 5.0"
   spec.add_runtime_dependency "jekyll-feed", "~> 0.17"
   spec.add_runtime_dependency "jekyll-theme-anurina-bootstrap", "~> 0.0.3"
