@@ -1,4 +1,5 @@
 {%- assign page_language = page.collection | default: site.anurina.locale.default | default: 'en-US' -%}
+{%- assign home_page_url = site[page_language] | where_exp: "item", "item.layout == 'home'" | map: "url" | first | remove: "index.html" | default: "404" -%}
 {%- assign locales = site.anurina.locale.sequence -%}
 {%- assign unique_page_names = site.documents | where_exp: "item", "item.layout == 'page' or item.layout == 'home'" | map: "name" | uniq -%}
 {%- assign menu_content_pages = "" | split: ',' -%}
@@ -19,9 +20,14 @@
   {%- endif -%}
 {%- endfor -%}
 {%- assign menu_content_pages_size = menu_content_pages | size -%}
+{%- if jekyll.environment != 'production' -%}
+<!-- (include: content-header) page_language: {{ page_language }} -->
+<!-- (include: content-header) locales: {{ locales | join: ", " }} -->
+<!-- (include: content-header) unique_post_names: {{ unique_post_names | join: ", " }} -->
+{%- endif -%}
 {%- raw %}{% endraw %}          <header class="site-header">
             <div class="wrapper">
-              <a class="site-title" rel="author" href="{{ site[page_language] | where_exp: "item", "item.layout == 'home'" | map: "url" | first  | relative_url }}">{{ site.title | escape }}</a>
+              <a class="site-title" rel="author" href="{{ home_page_url | relative_url }}">{{ site.title | escape }}</a>
               <nav class="site-nav">
                 {%- include social.html -%}
                 {%- if menu_content_pages_size > 0 -%}
@@ -36,7 +42,8 @@
                 <div class="trigger">
                   {%- for menu_content_page in menu_content_pages -%}
                     {%- assign menu_content_page_title = menu_content_page.menu_title | default: menu_content_page.title -%}
-                  <a class="page-link" href="{{ menu_content_page.url | relative_url }}">{{ menu_content_page_title | escape }}</a>
+                    {%- assign page_link_url = menu_content_page.url | remove: "index.html" | remove: ".html" -%}
+                  <a class="page-link" href="{{ page_link_url | relative_url }}">{{ menu_content_page_title | escape }}</a>
                   {%- endfor -%}
                 </div>
                 {%- endif -%}

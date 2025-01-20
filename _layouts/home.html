@@ -31,11 +31,7 @@ layout: base
           {%- endif -%}
         {%- endfor -%}
         {%- assign first_translated_post_document = translated_post_documents | first -%}
-        {%- if first_translated_post_document -%}
-          {%- assign posts = posts | push: first_translated_post_document -%}
-        {%- else -%}
-          {%- include unresolved-translation-document.html document_name=unique_post_name -%}
-        {%- endif -%}
+        {%- assign posts = posts | push: first_translated_post_document -%}
       {%- endif -%}
     {%- endfor -%}
     {% assign posts = posts | sort: "date" | reverse %}
@@ -45,7 +41,8 @@ layout: base
       <li>
         <span class="post-meta">{{ post.date | date: date_format }}</span>
         <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
+          {%- assign post_url = post.url | remove: "index.html" | remove: ".html" -%}
+          <a class="post-link" href="{{ post_url | relative_url }}">
             {{ post.title | escape }}
           </a>
         </h3>
@@ -59,13 +56,15 @@ layout: base
       <div class="pager">
         <ul class="pagination">
         {%- if paginator.previous_page %}
-          <li><a href="{{ paginator.previous_page_path | relative_url }}" class="previous-page">{{ paginator.previous_page }}</a></li>
+          {%- assign previous_page_url = paginator.previous_page_path | remove: "index.html" | remove: ".html" -%}
+          <li><a href="{{ previous_page_url | relative_url }}" class="previous-page">{{ paginator.previous_page }}</a></li>
         {%- else %}
           <li><div class="pager-edge">•</div></li>
         {%- endif %}
           <li><div class="current-page">{{ paginator.page }}</div></li>
         {%- if paginator.next_page %}
-          <li><a href="{{ paginator.next_page_path | relative_url }}" class="next-page">{{ paginator.next_page }}</a></li>
+          {%- assign next_page_url = paginator.next_page_path | remove: "index.html" | remove: ".html" -%}
+          <li><a href="{{ next_page_url | relative_url }}" class="next-page">{{ paginator.next_page }}</a></li>
         {%- else %}
           <li><div class="pager-edge">•</div></li>
         {%- endif %}
